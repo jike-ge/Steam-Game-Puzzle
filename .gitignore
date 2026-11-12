@@ -11,3 +11,4 @@ Thumbs.db
 .idea/
 steam-game-puzzle-*.zip
 data/names.json
+data/names.override.json

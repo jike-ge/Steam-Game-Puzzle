@@ -39,6 +39,28 @@ let displayName = identifier;
 let topMinutes = 1;
 let lastResult = null;
 let namesRetry = 0;
+let canEditNames = false;
+
+/** 手填中文名：写进 data/names.override.json，立刻生效。 */
+async function editGameName(game, labelEl) {
+  const current = game.name_zh || '';
+  const input = window.prompt(`「${game.name}」的中文名\n留空 = 删掉这条覆盖`, current);
+  if (input === null) return;
+  const zh = input.trim();
+  try {
+    const saved = await fetchJSON('/api/names', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ appid: game.appid, zh }),
+    });
+    game.name_zh = saved?.name_zh || '';
+    if (labelEl) labelEl.textContent = gameLabel(game);
+    mosaic.updateNames([{ appid: game.appid, name_zh: game.name_zh }]);
+    toast(zh ? '已保存' : '已删除这条覆盖');
+  } catch (error) {
+    toast(error.message || '保存失败', 4200);
+  }
+}
 
 /**
  * 中文名是服务器后台补的：先渲染英文名，过一会儿再静默取一次，
@@ -183,6 +205,19 @@ function buildList(result) {
     link.textContent = gameLabel(game);
     name.append(link);
 
+    if (canEditNames) {
+      const edit = document.createElement('button');
+      edit.type = 'button';
+      edit.className = 'name-edit';
+      edit.textContent = '✎';
+      edit.title = '改中文名';
+      edit.setAttribute('aria-label', `修改 ${game.name} 的中文名`);
+      edit.addEventListener('click', () => {
+        void editGameName(game, link);
+      });
+      name.append(edit);
+    }
+
     const hours = document.createElement('td');
     hours.className = 'figure';
     const strong = document.createElement('b');
@@ -216,6 +251,7 @@ function applyPayload(payload) {
   }
 
   displayName = payload.displayName || payload.resolvedFrom || payload.steamID || identifier;
+  canEditNames = payload.canEditNames === true;
   nameEl.textContent = displayName;
   document.title = `${displayName} · Steam Game Puzzle`;
   document.querySelectorAll('.who .badge').forEach((node) => node.remove());

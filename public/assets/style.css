@@ -1194,6 +1194,32 @@ body.home {
   font-size: 1rem;
 }
 
+/* 手填中文名的小铅笔 */
+.name-edit {
+  margin-left: 8px;
+  padding: 2px 6px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: none;
+  color: var(--ash);
+  font: inherit;
+  font-size: 0.8125rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 140ms var(--ease), color 140ms var(--ease), border-color 140ms var(--ease);
+}
+
+#list-table tbody tr:hover .name-edit,
+.name-edit:focus-visible {
+  opacity: 1;
+}
+
+.name-edit:hover {
+  color: var(--bone);
+  border-color: var(--hair-strong);
+}
+
 #list-view .board-table tbody tr:last-child td {
   border-bottom: 0;
 }
