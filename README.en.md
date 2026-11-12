@@ -34,15 +34,6 @@ and the wall dims, leaving a wall label in the corner for the tile under the cur
 | **Optional caption** | 2× PNG export with name / game count / total hours along the bottom |
 | **Honest errors** | Missing key, rejected key, private profile, Steam unreachable — each with a next step |
 
-```text
-┌──────────────────────────┬──────────────────────────┐
-│  Counter-Strike 2  5×5   │  Dota 2            5×5   │
-├───────────┬──────────────┴───────┬──────────────────┤
-│ Elden Ring│ 1×1 tiles fill holes │ Baldur's Gate 3  │
-│    4×4    │                      │       3×3        │
-└───────────┴──────────────────────┴──────────────────┘
-```
-
 ## Screenshots
 
 <img src="docs/home.jpg" width="820" alt="Home page">
@@ -128,11 +119,13 @@ So the fetcher races the old path against "look up the hash → new path" and ta
 
 ## API
 
-| Method | Path | Notes |
-|---|---|---|
-| GET | `/api/library/:identifier` | Vanity name or steamID64 → `{ steamID, displayName, games, fetchedAt, cached, stale }` |
-| GET | `/api/health` | Version, build fingerprint, key configured, cover count, missing covers |
-| GET | `/cover/:appid.jpg` | Cover image (cached on disk; ETag) |
+All three are `GET`:
+
+| Path | Notes |
+|---|---|
+| `/api/library/:identifier` | Vanity name or steamID64 → `{ steamID, displayName, games, fetchedAt, cached, stale }` |
+| `/api/health` | Version, build fingerprint, key configured, cover count, missing covers |
+| `/cover/:appid.jpg` | Cover image (cached on disk; ETag) |
 
 `/api/library/:id?refresh=1` bypasses the cache; `X-Steam-API-Key` or `?api_key=` passes a one-off key.
 

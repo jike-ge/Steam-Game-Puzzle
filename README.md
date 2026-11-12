@@ -33,15 +33,6 @@
 | **可选展签** | 导出 2 倍 PNG，底部可带用户名 / 游戏数 / 总时长 |
 | **说人话的报错** | 没密钥 / 密钥被拒 / 私密资料 / 连不上 Steam，各给下一步 |
 
-```text
-┌──────────────────────────┬──────────────────────────┐
-│  Counter-Strike 2  5×5   │  Dota 2            5×5   │
-├───────────┬──────────────┴───────┬──────────────────┤
-│ Elden Ring│ 小格子按 1×1 自动补洞 │ Baldur's Gate 3  │
-│    4×4    │                      │       3×3        │
-└───────────┴──────────────────────┴──────────────────┘
-```
-
 ## 界面
 
 <img src="docs/home.jpg" width="820" alt="首页">
@@ -126,11 +117,13 @@ Steam 对未上线的游戏会返回 1–2KB 的灰色占位图，用大小挡�
 
 ## 接口
 
-| 方法 | 路径 | 说明 |
-|---|---|---|
-| GET | `/api/library/:identifier` | 昵称或 steamID64，返回 `{ steamID, displayName, games, fetchedAt, cached, stale }` |
-| GET | `/api/health` | 版本 / 构建指纹 / 有没有密钥 / 缓存了多少封面 / 缺哪些封面 |
-| GET | `/cover/:appid.jpg` | 封面（本地有就直接给，没有就取一次存下来；带 ETag） |
+三个都是 `GET`：
+
+| 路径 | 说明 |
+|---|---|
+| `/api/library/:identifier` | 昵称或 steamID64，返回 `{ steamID, displayName, games, fetchedAt, cached, stale }` |
+| `/api/health` | 版本 / 构建指纹 / 有没有密钥 / 缓存了多少封面 / 缺哪些封面 |
+| `/cover/:appid.jpg` | 封面（本地有就直接给，没有就取一次存下来；带 ETag） |
 
 `/api/library/:id?refresh=1` 绕过缓存重新拉；也可以带 `X-Steam-API-Key` 头或 `?api_key=` 用临时密钥。
 
