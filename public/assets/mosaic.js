@@ -27,6 +27,15 @@ export function formatInt(value) {
   return Number(value || 0).toLocaleString('zh-CN');
 }
 
+/** 显示名：有中文就「英文名 / 中文名」，没有就只显示英文名。 */
+export function gameLabel(game) {
+  const en = (game?.name || '').trim();
+  const zh = (game?.name_zh || '').trim();
+  if (!en) return zh || `App ${game?.appid ?? ''}`.trim();
+  if (!zh || zh === en) return en;
+  return `${en} / ${zh}`;
+}
+
 export function initials(name, appid) {
   const trimmed = String(name || '').trim();
   if (!trimmed) return String(appid);
@@ -43,6 +52,7 @@ export function normalizeGames(rawGames, { maxTiles = 900 } = {}) {
     .map((game) => ({
       appid: Number(game.appid),
       name: typeof game.name === 'string' ? game.name : '',
+      name_zh: typeof game.name_zh === 'string' ? game.name_zh : '',
       minutes: Math.max(0, Math.round(Number(game.playtime_forever) || 0)),
       recent: Math.max(0, Math.round(Number(game.playtime_2weeks) || 0)),
     }))
@@ -195,7 +205,7 @@ export function createMosaic(container, options = {}) {
         tile.tabIndex = -1;
         // 未加载出来的格子先垫一层暗色，不让墙出现黑洞
         tile.style.setProperty('--h', String((game.appid * 37) % 360));
-        tile.setAttribute('aria-label', `${game.name || `App ${game.appid}`}，${formatHours(game.hours)}`);
+        tile.setAttribute('aria-label', `${gameLabel(game)}，${formatHours(game.hours)}`);
         if (reveal) tile.style.setProperty('--d', `${Math.min(index * 6, 460)}ms`);
 
         const image = document.createElement('img');
@@ -220,7 +230,7 @@ export function createMosaic(container, options = {}) {
           }
           tile.classList.add('is-missing');
           tile.dataset.initial = initials(game.name, game.appid);
-          tile.title = game.name || `App ${game.appid}`;
+          tile.title = gameLabel(game);
         });
         tile.append(image);
         fragment.append(tile);
@@ -438,6 +448,22 @@ export function createMosaic(container, options = {}) {
       return { ...normalized, revealed };
     },
     relayout: () => schedule(true),
+    /** 只更新名字（中文名补全后用），不动 DOM 结构。 */
+    updateNames(rawGames) {
+      const byId = new Map();
+      for (const game of Array.isArray(rawGames) ? rawGames : []) {
+        byId.set(Number(game.appid), typeof game.name_zh === 'string' ? game.name_zh : '');
+      }
+      games.forEach((game) => {
+        if (byId.has(game.appid)) game.name_zh = byId.get(game.appid) || '';
+      });
+      tiles.forEach((tile, index) => {
+        const game = games[index];
+        if (!game) return;
+        tile.setAttribute('aria-label', `${gameLabel(game)}，${formatHours(game.hours)}`);
+        if (tile.classList.contains('is-missing')) tile.title = gameLabel(game);
+      });
+    },
     getGames: () => games,
     getTotalMinutes: () => totalMinutes,
     exportPNG,

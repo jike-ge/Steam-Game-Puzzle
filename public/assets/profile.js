@@ -1,4 +1,4 @@
-import { createMosaic } from './mosaic.js';
+import { createMosaic, gameLabel } from './mosaic.js';
 import { $, fetchJSON, toast, copyText, humanHours, humanInt, percent } from './ui.js';
 
 const identifier = document.body.dataset.identifier || decodeURIComponent(location.pathname.slice(1));
@@ -38,6 +38,34 @@ const wantsRefresh = new URLSearchParams(location.search).get('refresh') === '1'
 let displayName = identifier;
 let topMinutes = 1;
 let lastResult = null;
+let namesRetry = 0;
+
+/**
+ * 中文名是服务器后台补的：先渲染英文名，过一会儿再静默取一次，
+ * 只更新名字，不重建整面墙。
+ */
+function refreshNamesSoon(pending) {
+  if (!pending || namesRetry >= 2) return;
+  namesRetry += 1;
+  const delay = namesRetry === 1 ? 8000 : 20000;
+  window.setTimeout(async () => {
+    try {
+      const next = await fetchJSON(`/api/library/${encodeURIComponent(identifier)}`, {
+        headers: currentKey ? { 'x-steam-api-key': currentKey } : {},
+      });
+      if (!Array.isArray(next?.games)) return;
+      mosaic.updateNames(next.games);
+      const games = mosaic.getGames();
+      const totalMinutes = mosaic.getTotalMinutes();
+      const result = { games, totalMinutes, totalHours: totalMinutes / 60, hiddenCount: 0 };
+      setMeta(result);
+      buildList(result);
+      refreshNamesSoon(next.namesPending);
+    } catch {
+      /* 取不到就算了，下次刷新页面再说 */
+    }
+  }, delay);
+}
 
 // 导出展签的勾选项，存在本地
 const EXPORT_STORE = 'panorama_export_options';
@@ -103,7 +131,7 @@ wallEl.addEventListener(
 );
 
 function showPlacard(game, index) {
-  placardName.textContent = game.name || `App ${game.appid}`;
+  placardName.textContent = gameLabel(game);
   placardHours.textContent = humanHours(game.hours);
   placardShare.textContent = `占全部 ${percent(game.minutes, mosaic.getTotalMinutes())}`;
   placardRecent.textContent = game.recent > 0 ? `近两周 ${humanHours(game.recent / 60)}` : '';
@@ -127,7 +155,7 @@ function setMeta(result) {
   if (top?.name) {
     fragment.append('，最常玩 ');
     const topEl = document.createElement('b');
-    topEl.textContent = top.name;
+    topEl.textContent = gameLabel(top);
     fragment.append(topEl);
   }
   if (result.hiddenCount > 0) {
@@ -152,7 +180,7 @@ function buildList(result) {
     link.href = `https://store.steampowered.com/app/${game.appid}/`;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
-    link.textContent = game.name || `App ${game.appid}`;
+    link.textContent = gameLabel(game);
     name.append(link);
 
     const hours = document.createElement('td');
@@ -206,6 +234,7 @@ function applyPayload(payload) {
   topMinutes = Math.max(1, result.games[0]?.minutes || 1);
   setMeta(result);
   buildList(result);
+  refreshNamesSoon(payload.namesPending);
 
   downloadBtn.disabled = false;
   listToggle.disabled = false;

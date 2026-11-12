@@ -30,6 +30,7 @@ and the wall dims, leaving a wall label in the corner for the tile under the cur
 | **Fits one screen** | Binary search for the column count that fills the viewport, then rows are stretched to remove any bottom band |
 | **Spotlight hover** | The wall dims; the label shows name / hours / share / last two weeks |
 | **Covers cached locally** | Fetched once by the server, served same-origin, so the export canvas is never tainted |
+| **Bilingual names** | Shows English / 中文 when Steam has a Chinese title, otherwise the original name |
 | **Table view** | Switch to a table for every game and its exact hours |
 | **Optional caption** | 2× PNG export with name / game count / total hours along the bottom |
 | **Honest errors** | Missing key, rejected key, private profile, Steam unreachable — each with a next step |
@@ -168,7 +169,7 @@ DEPLOY-1panel.md          1Panel deployment notes (Chinese)
 ## Data & privacy
 
 - Only the Steam ID goes to Steam (and to your own proxy, if configured). No third-party analytics.
-- Caches live under `data/`: one JSON per profile, one JPG per appid. Delete the folder to reset.
+- Caches live under `data/`: one JSON per profile, one JPG per appid, Chinese names in `data/names.json`. Delete the folder to reset.
 - Playtime is cached for 15 minutes; if Steam is unreachable the server serves a cache up to 30 days old and says so.
 - Game cover art belongs to Valve and the respective publishers; this project only displays it.
 

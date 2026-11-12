@@ -22,6 +22,7 @@ import {
 } from './lib/steam.mjs';
 import { getLibrary, listEntries, readEntry, saveEntry, CACHE_DIR } from './lib/store.mjs';
 import { COVER_DIR, COVER_SOURCE, coverStats, getCover, warmCovers } from './lib/covers.mjs';
+import { enrichNames, nameStats, warmNames } from './lib/names.mjs';
 import { detectProxy, proxyState } from './lib/http.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
@@ -225,12 +226,15 @@ async function handleDemo(req, res, url) {
 
   if (cached?.games?.length && !force) {
     warmCovers(cached.games.map((game) => game.appid));
+    const names = await enrichNames(cached.games);
+    if (names.missing.length) warmNames(names.missing.slice(0, 400));
     return json(res, 200, {
       ...cached,
       steamID: DEMO_STEAM_ID,
       demo: true,
       cached: true,
       stale: false,
+      namesPending: names.pending,
       profile: { steamID: DEMO_STEAM_ID, name: cached.displayName || '示例档案', demo: true },
     });
   }
@@ -248,11 +252,14 @@ async function handleDemo(req, res, url) {
       };
       await saveEntry(entry);
       warmCovers(library.games.map((game) => game.appid));
+      const names = await enrichNames(entry.games);
+      if (names.missing.length) warmNames(names.missing.slice(0, 400));
       return json(res, 200, {
         ...entry,
         demo: true,
         cached: false,
         stale: false,
+        namesPending: names.pending,
         profile: { steamID: DEMO_STEAM_ID, name: entry.displayName, demo: true },
       });
     } catch (error) {
@@ -266,9 +273,12 @@ async function handleDemo(req, res, url) {
   if (!fallback) return json(res, 500, { error: { code: 'demo_missing', message: '示例数据缺失。' } });
 
   warmCovers(fallback.games.map((game) => game.appid));
+  const fallbackNames = await enrichNames(fallback.games);
+  if (fallbackNames.missing.length) warmNames(fallbackNames.missing.slice(0, 400));
 
   return json(res, 200, {
     ...fallback,
+    namesPending: fallbackNames.pending,
     steamID: DEMO_STEAM_ID || 'demo',
     demo: true,
     demoFallback: Boolean(DEMO_STEAM_ID),
@@ -302,6 +312,10 @@ async function handleLibrary(res, url, identifier) {
   // 顺手把封面取回来，等浏览器开始要的时候大多已经在本机了
   if (!library.stale) warmCovers(library.games.slice(0, 200).map((game) => game.appid));
 
+  // 中文名：先用手上有的，缺的后台补齐
+  const names = await enrichNames(library.games);
+  if (names.missing.length) warmNames(names.missing.slice(0, 400));
+
   // 显示名尽量用 Steam 昵称，别只给一串数字 ID
   let displayName = library.displayName || '';
   if (!displayName) {
@@ -317,6 +331,7 @@ async function handleLibrary(res, url, identifier) {
     steamID,
     displayName,
     resolvedFrom,
+    namesPending: names.pending,
     keySource: apiKey ? 'user' : hasServerKey() ? 'server' : 'none',
   });
 }
@@ -360,6 +375,7 @@ const server = http.createServer(async (req, res) => {
           cacheDir: CACHE_DIR,
           coverDir: COVER_DIR,
           covers: await coverStats(),
+          names: await nameStats(),
           coverSource: COVER_SOURCE,
           trackedGames: wanted.size,
           missingCovers,

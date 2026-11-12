@@ -20,17 +20,20 @@
    "appid": 1245620,
    "name": "ELDEN RING",
    "playtime_forever": 23172,
-   "playtime_2weeks": 2478
+   "playtime_2weeks": 2478,
+   "name_zh": "艾尔登法环"
   },
   {
    "appid": 1091500,
    "name": "Cyberpunk 2077",
-   "playtime_forever": 14514
+   "playtime_forever": 14514,
+   "name_zh": "赛博朋克 2077"
   },
   {
    "appid": 1086940,
    "name": "Baldur's Gate 3",
-   "playtime_forever": 11910
+   "playtime_forever": 11910,
+   "name_zh": "博德之门3"
   },
   {
    "appid": 1174180,
@@ -40,12 +43,14 @@
   {
    "appid": 292030,
    "name": "The Witcher 3: Wild Hunt — Remastered",
-   "playtime_forever": 9168
+   "playtime_forever": 9168,
+   "name_zh": "巫师3：狂猎 — 重制版"
   },
   {
    "appid": 289070,
    "name": "Sid Meier's Civilization VI",
-   "playtime_forever": 7704
+   "playtime_forever": 7704,
+   "name_zh": "Sid Meier’s Civilization® VI"
   },
   {
    "appid": 413150,
@@ -55,12 +60,14 @@
   {
    "appid": 2358720,
    "name": "Black Myth: Wukong",
-   "playtime_forever": 6252
+   "playtime_forever": 6252,
+   "name_zh": "黑神话：悟空"
   },
   {
    "appid": 892970,
    "name": "Valheim",
-   "playtime_forever": 5802
+   "playtime_forever": 5802,
+   "name_zh": "Valheim: 英灵神殿"
   },
   {
    "appid": 1145360,
@@ -85,17 +92,20 @@
   {
    "appid": 271590,
    "name": "Grand Theft Auto V Legacy",
-   "playtime_forever": 4272
+   "playtime_forever": 4272,
+   "name_zh": "Grand Theft Auto V 传承版"
   },
   {
    "appid": 990080,
    "name": "Hogwarts Legacy",
-   "playtime_forever": 4134
+   "playtime_forever": 4134,
+   "name_zh": "霍格沃茨之遗"
   },
   {
    "appid": 632470,
    "name": "Disco Elysium",
-   "playtime_forever": 3684
+   "playtime_forever": 3684,
+   "name_zh": "Disco Elysium - The Final Cut"
   },
   {
    "appid": 367520,
@@ -105,7 +115,8 @@
   {
    "appid": 814380,
    "name": "Sekiro™: Shadows Die Twice",
-   "playtime_forever": 3252
+   "playtime_forever": 3252,
+   "name_zh": "Sekiro™: Shadows Die Twice - GOTY Edition"
   },
   {
    "appid": 578080,
@@ -115,7 +126,8 @@
   {
    "appid": 381210,
    "name": "Dead by Daylight",
-   "playtime_forever": 2838
+   "playtime_forever": 2838,
+   "name_zh": "黎明杀机"
   },
   {
    "appid": 251570,
@@ -125,7 +137,8 @@
   {
    "appid": 322330,
    "name": "Don't Starve Together",
-   "playtime_forever": 2514
+   "playtime_forever": 2514,
+   "name_zh": "饥荒联机版"
   },
   {
    "appid": 220,
@@ -155,28 +168,33 @@
   {
    "appid": 526870,
    "name": "Satisfactory",
-   "playtime_forever": 1572
+   "playtime_forever": 1572,
+   "name_zh": "幸福工厂"
   },
   {
    "appid": 548430,
    "name": "Deep Rock Galactic",
-   "playtime_forever": 1494
+   "playtime_forever": 1494,
+   "name_zh": "深岩银河"
   },
   {
    "appid": 553850,
    "name": "HELLDIVERS™ 2",
    "playtime_forever": 1404,
-   "playtime_2weeks": 14448
+   "playtime_2weeks": 14448,
+   "name_zh": "HELLDIVERS™ 绝地潜兵2"
   },
   {
    "appid": 200260,
    "name": "Batman: Arkham City GOTY",
-   "playtime_forever": 1302
+   "playtime_forever": 1302,
+   "name_zh": "Batman: Arkham City - Game of the Year Edition"
   },
   {
    "appid": 1172470,
    "name": "Apex Legends",
-   "playtime_forever": 1218
+   "playtime_forever": 1218,
+   "name_zh": "Apex Legends™"
   },
   {
    "appid": 1237970,
@@ -191,7 +209,8 @@
   {
    "appid": 359550,
    "name": "Tom Clancy's Rainbow Six Siege",
-   "playtime_forever": 1032
+   "playtime_forever": 1032,
+   "name_zh": "彩虹六号：围攻"
   },
   {
    "appid": 252490,
@@ -201,22 +220,26 @@
   {
    "appid": 236390,
    "name": "War Thunder",
-   "playtime_forever": 924
+   "playtime_forever": 924,
+   "name_zh": "战争雷霆"
   },
   {
    "appid": 739630,
    "name": "Phasmophobia",
-   "playtime_forever": 852
+   "playtime_forever": 852,
+   "name_zh": "Phasmophobia 恐鬼症"
   },
   {
    "appid": 264710,
    "name": "Subnautica",
-   "playtime_forever": 822
+   "playtime_forever": 822,
+   "name_zh": "Subnautica - 深海迷航"
   },
   {
    "appid": 275850,
    "name": "No Man's Sky",
-   "playtime_forever": 774
+   "playtime_forever": 774,
+   "name_zh": "No Man's Sky 无人深空"
   },
   {
    "appid": 588650,
@@ -231,7 +254,8 @@
   {
    "appid": 949230,
    "name": "Cities: Skylines II",
-   "playtime_forever": 564
+   "playtime_forever": 564,
+   "name_zh": "《都市：天际线2》"
   },
   {
    "appid": 1966720,
@@ -252,7 +276,8 @@
   {
    "appid": 1426210,
    "name": "It Takes Two",
-   "playtime_forever": 408
+   "playtime_forever": 408,
+   "name_zh": "双人成行"
   },
   {
    "appid": 601150,
@@ -262,13 +287,15 @@
   {
    "appid": 1681430,
    "name": "RoboCop: Rogue City",
-   "playtime_forever": 342
+   "playtime_forever": 342,
+   "name_zh": "机械战警：暴戾都市"
   },
   {
    "appid": 1623730,
    "name": "Palworld",
    "playtime_forever": 306,
-   "playtime_2weeks": 1104
+   "playtime_2weeks": 1104,
+   "name_zh": "Palworld / 幻兽帕鲁"
   },
   {
    "appid": 774361,
@@ -278,7 +305,8 @@
   {
    "appid": 1113000,
    "name": "Persona 4 Golden",
-   "playtime_forever": 252
+   "playtime_forever": 252,
+   "name_zh": "女神异闻录４ 黄金版"
   },
   {
    "appid": 1145350,
@@ -288,12 +316,14 @@
   {
    "appid": 2114740,
    "name": "Blasphemous 2",
-   "playtime_forever": 204
+   "playtime_forever": 204,
+   "name_zh": "神之亵渎2"
   },
   {
    "appid": 1097150,
    "name": "Fall Guys",
-   "playtime_forever": 186
+   "playtime_forever": 186,
+   "name_zh": "糖豆人"
   },
   {
    "appid": 400,
@@ -303,12 +333,14 @@
   {
    "appid": 1237320,
    "name": "Sonic Frontiers",
-   "playtime_forever": 162
+   "playtime_forever": 162,
+   "name_zh": "索尼克 未知边境"
   },
   {
    "appid": 1895880,
    "name": "Ratchet & Clank: Rift Apart",
-   "playtime_forever": 156
+   "playtime_forever": 156,
+   "name_zh": "瑞奇与叮当 时空跳转"
   },
   {
    "appid": 1817230,
@@ -333,7 +365,8 @@
   {
    "appid": 306130,
    "name": "The Elder Scrolls Online",
-   "playtime_forever": 132
+   "playtime_forever": 132,
+   "name_zh": "《上古卷轴OL》"
   },
   {
    "appid": 346110,
@@ -354,7 +387,8 @@
   {
    "appid": 1361210,
    "name": "Warhammer 40,000: Darktide",
-   "playtime_forever": 132
+   "playtime_forever": 132,
+   "name_zh": "战锤40K：暗潮"
   },
   {
    "appid": 1888930,
@@ -379,22 +413,26 @@
   {
    "appid": 703080,
    "name": "Planet Zoo",
-   "playtime_forever": 114
+   "playtime_forever": 114,
+   "name_zh": "动物园之星"
   },
   {
    "appid": 1030840,
    "name": "Mafia: Definitive Edition",
-   "playtime_forever": 114
+   "playtime_forever": 114,
+   "name_zh": "《四海兄弟: 最终版》​"
   },
   {
    "appid": 214950,
    "name": "Total War: ROME II - Emperor Edition",
-   "playtime_forever": 102
+   "playtime_forever": 102,
+   "name_zh": "全面战争：罗马2 - 帝皇版"
   },
   {
    "appid": 1172620,
    "name": "Sea of Thieves",
-   "playtime_forever": 102
+   "playtime_forever": 102,
+   "name_zh": "Sea of Thieves: 2026 Edition"
   },
   {
    "appid": 2195250,
@@ -420,7 +458,8 @@
    "appid": 2183900,
    "name": "Warhammer 40,000: Space Marine 2",
    "playtime_forever": 90,
-   "playtime_2weeks": 5736
+   "playtime_2weeks": 5736,
+   "name_zh": "Warhammer 40,000: 星际战士2"
   },
   {
    "appid": 236850,
@@ -430,12 +469,14 @@
   {
    "appid": 1178830,
    "name": "Bright Memory: Infinite",
-   "playtime_forever": 84
+   "playtime_forever": 84,
+   "name_zh": "光明记忆：无限"
   },
   {
    "appid": 1601580,
    "name": "Frostpunk 2",
-   "playtime_forever": 78
+   "playtime_forever": 78,
+   "name_zh": "冰汽时代2"
   },
   {
    "appid": 233860,
@@ -450,12 +491,14 @@
   {
    "appid": 1364780,
    "name": "Street Fighter™ 6",
-   "playtime_forever": 72
+   "playtime_forever": 72,
+   "name_zh": "Street Fighter 6"
   },
   {
    "appid": 244210,
    "name": "Assetto Corsa",
-   "playtime_forever": 66
+   "playtime_forever": 66,
+   "name_zh": "神力科莎 Assetto Corsa"
   },
   {
    "appid": 1238860,
@@ -490,12 +533,14 @@
   {
    "appid": 1233570,
    "name": "Mirror's Edge™ Catalyst",
-   "playtime_forever": 60
+   "playtime_forever": 60,
+   "name_zh": "《镜之边缘：Catalyst》"
   },
   {
    "appid": 1282100,
    "name": "Remnant II",
-   "playtime_forever": 60
+   "playtime_forever": 60,
+   "name_zh": "遗迹2"
   },
   {
    "appid": 232090,
@@ -505,32 +550,38 @@
   {
    "appid": 1162750,
    "name": "Songs of Syx",
-   "playtime_forever": 54
+   "playtime_forever": 54,
+   "name_zh": "希克斯之歌"
   },
   {
    "appid": 1172380,
    "name": "STAR WARS Jedi: Fallen Order™ ",
-   "playtime_forever": 54
+   "playtime_forever": 54,
+   "name_zh": "《星球大战 绝地：陨落的武士团™》"
   },
   {
    "appid": 1337520,
    "name": "Risk of Rain Returns",
-   "playtime_forever": 54
+   "playtime_forever": 54,
+   "name_zh": "雨中冒险: 回归"
   },
   {
    "appid": 1222730,
    "name": "STAR WARS™: Squadrons",
-   "playtime_forever": 48
+   "playtime_forever": 48,
+   "name_zh": "星球大战™：战机中队"
   },
   {
    "appid": 1517290,
    "name": "Battlefield™ 2042",
-   "playtime_forever": 48
+   "playtime_forever": 48,
+   "name_zh": "战地风云™ 2042"
   },
   {
    "appid": 2001120,
    "name": "Split Fiction",
-   "playtime_forever": 48
+   "playtime_forever": 48,
+   "name_zh": "双影奇境"
   },
   {
    "appid": 359320,
@@ -545,12 +596,14 @@
   {
    "appid": 1811260,
    "name": "EA SPORTS™ FIFA 23",
-   "playtime_forever": 42
+   "playtime_forever": 42,
+   "name_zh": "EA SPORTS™《FIFA 23》"
   },
   {
    "appid": 2161700,
    "name": "Persona 3 Reload",
-   "playtime_forever": 42
+   "playtime_forever": 42,
+   "name_zh": "女神异闻录３ Reload"
   },
   {
    "appid": 1151340,
@@ -560,7 +613,8 @@
   {
    "appid": 8930,
    "name": "Sid Meier's Civilization V",
-   "playtime_forever": 30
+   "playtime_forever": 30,
+   "name_zh": "Sid Meier's Civilization® V"
   },
   {
    "appid": 1326470,
@@ -570,7 +624,8 @@
   {
    "appid": 1551360,
    "name": "Forza Horizon 5",
-   "playtime_forever": 30
+   "playtime_forever": 30,
+   "name_zh": "极限竞速：地平线 5"
   },
   {
    "appid": 374320,
@@ -585,7 +640,8 @@
   {
    "appid": 1817190,
    "name": "Marvel's Spider-Man: Miles Morales",
-   "playtime_forever": 18
+   "playtime_forever": 18,
+   "name_zh": "Marvel’s Spider-Man: Miles Morales"
   }
  ]
 }
