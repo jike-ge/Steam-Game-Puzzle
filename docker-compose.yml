@@ -1,0 +1,23 @@
+services:
+  panorama:
+    build: .
+    image: playtime-panorama:latest
+    container_name: playtime-panorama
+    restart: unless-stopped
+    ports:
+      # 只给本机反代用；要直接对外访问改成 0.0.0.0:8787:8787
+      - "127.0.0.1:8787:8787"
+    environment:
+      HOST: 0.0.0.0
+      PORT: "8787"
+      TZ: Asia/Shanghai
+      STEAM_API_KEY: ${STEAM_API_KEY:-}
+      STEAM_PROXY: ${STEAM_PROXY:-}
+      DEMO_STEAM_ID: ${DEMO_STEAM_ID:-}
+    volumes:
+      # 缓存和封面要留在宿主机上，重建容器不丢
+      - ./data/cache:/app/data/cache
+      - ./data/covers:/app/data/covers
+    extra_hosts:
+      # 容器里想连宿主机的 7890 代理就用 host.docker.internal
+      - "host.docker.internal:host-gateway"

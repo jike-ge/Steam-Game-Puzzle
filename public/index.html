@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Playtime Panorama · 把你的游戏时间铺成一面墙</title>
+  <meta name="description" content="输入 Steam 昵称或 ID，把整个游戏库铺成一面墙。每一格封面的面积，等于你在那款游戏里花掉的时间。" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#141110" />
+  <meta name="app-version" content="{{VERSION}}" /><meta name="app-build" content="{{BUILD}}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Playtime Panorama" />
+  <meta property="og:description" content="把 Steam 游戏库铺成一面墙，格子大小就是你的游戏时长。" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com" crossorigin />
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+
+<body class="home">
+  <header class="masthead">
+    <a class="wordmark" href="/">STEAM游戏生涯拼图</a>
+    <nav>
+      <a href="/demo">示例档案</a>
+      <span class="ver" title="当前运行的版本">v{{VERSION}}</span>
+    </nav>
+  </header>
+
+  <main class="home-main">
+    <section class="pitch">
+      <h1 class="display">把你的游戏时间<br />铺成一面墙</h1>
+      <p class="lede">输入 Steam 昵称或 17 位数字 ID。墙上的每一格都是你玩过的一款游戏，格子越大，说明你玩得越久。</p>
+
+      <form class="search" id="lookup" novalidate>
+        <div class="field">
+          <label for="identifier">Steam 昵称或 steamID64</label>
+          <input id="identifier" name="identifier" placeholder="例如 76561198000000000 或某个昵称" autocomplete="off"
+            spellcheck="false" required />
+        </div>
+        <button class="btn btn--primary" type="submit">生成拼图</button>
+      </form>
+
+      <p class="hint-row">
+        <a href="/demo">看看示例档案</a>
+        <span>封面图来自 Steam，需要你的游戏详情是公开的</span>
+      </p>
+
+      <details class="keybox" id="keybox">
+        <summary>用自己的 Steam API 密钥</summary>
+        <div class="keybody">
+          <p>不填也能用，走的是 Steam 公开页面，偶尔会被限流。填了以后走官方接口，快而且稳。密钥只存在这台浏览器里，随请求头发给本机服务器，不落盘、不写日志。</p>
+          <div class="field">
+            <label for="api-key">Steam Web API 密钥</label>
+            <input id="api-key" name="api-key" type="password" placeholder="32 位字符串" autocomplete="off"
+              spellcheck="false" />
+          </div>
+          <p>在 <a href="https://steamcommunity.com/dev/apikey" target="_blank"
+              rel="noreferrer">steamcommunity.com/dev/apikey</a> 免费申请，注册域名随便填。</p>
+        </div>
+      </details>
+
+      <div class="steps-block">
+        <p class="steps-title">看不到数据，通常是隐私设置</p>
+        <ol class="steps">
+          <li><span>打开自己的 Steam 个人资料页，点「编辑个人资料」。</span></li>
+          <li><span>切到「我的隐私设置」。</span></li>
+          <li><span>把「游戏详情」改成<strong>公开</strong>，并取消勾选<strong>「始终将我的游戏总时长保持私密」</strong>。</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <aside class="preview" aria-label="示例拼图">
+      <div class="wall" id="preview-wall"></div>
+      <div class="preview-caption">
+        <span id="caption-left">示例档案</span>
+        <span class="num" id="caption-right">载入中</span>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-foot">
+    <span>灵感来自 <a href="https://github.com/obviyus/playtime-panorama" target="_blank"
+        rel="noreferrer">obviyus/playtime-panorama</a></span>
+    <span>游戏封面版权归 Valve 与各发行商所有</span>
+  </footer>
+
+  <script type="module" src="/assets/home.js"></script>
+</body>
+
+</html>

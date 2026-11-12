@@ -1,0 +1,12 @@
+node_modules/
+data/cache/
+data/covers/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+playtime-panorama-*.zip

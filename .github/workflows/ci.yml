@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 语法检查
+        run: |
+          for f in server.mjs lib/*.mjs public/assets/*.js; do
+            echo "check $f"
+            node --check "$f"
+          done
+
+      - name: 起服务并自检
+        run: |
+          node server.mjs > server.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8787/api/health > health.json 2>/dev/null; then break; fi
+            sleep 1
+          done
+          cat health.json
+          grep -q '"ok":true' health.json
+          curl -fsS http://127.0.0.1:8787/ -o /dev/null
+          curl -fsS http://127.0.0.1:8787/demo -o /dev/null
+          curl -fsS http://127.0.0.1:8787/favicon.svg -o /dev/null
+          curl -fsS -o /dev/null -w '%{http_code}' http://127.0.0.1:8787/leaderboard | grep -q 404
+          echo "全部通过"
+          cat server.log
+
+      - name: 检查没有把密钥写进代码
+        run: |
+          if grep -rInE 'STEAM_API_KEY=[A-Za-z0-9]{16,}' --exclude-dir=.git .; then
+            echo "发现疑似写死的密钥" >&2
+            exit 1
+          fi
+          echo "干净"

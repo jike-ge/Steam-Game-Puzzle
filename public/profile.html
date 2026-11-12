@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{TITLE}}</title>
+  <meta name="description" content="这个 Steam 玩家的游戏库被铺成一面墙，每一格封面的面积等于游戏时长。" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#141110" />
+  <meta name="app-version" content="{{VERSION}}" /><meta name="app-build" content="{{BUILD}}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{TITLE}}" />
+  <meta property="og:description" content="Steam 游戏库拼图，格子大小即游戏时长。" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com" crossorigin />
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+
+<body class="profile" data-identifier="{{IDENTIFIER}}">
+  <header class="profile-bar">
+    <a class="btn btn--icon" href="/" aria-label="回到首页" title="回到首页">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+        stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5" />
+        <path d="m12 19-7-7 7-7" />
+      </svg>
+    </a>
+    <div class="who">
+      <h1 id="who-name">载入中</h1>
+      <span class="meta" id="who-meta"></span>
+    </div>
+    <span class="spacer"></span>
+    <div class="actions">
+      <button class="btn btn--icon" id="copy-link" type="button" aria-label="复制链接" title="复制链接">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
+          <rect width="13" height="13" x="9" y="9" rx="2" />
+          <path d="M5 15a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2" />
+        </svg>
+      </button>
+      <button class="btn btn--icon" id="list-toggle" type="button" aria-label="查看清单" title="查看清单"
+        aria-expanded="false" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
+          <path d="M8 6h13M8 12h13M8 18h13" />
+          <path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01" />
+        </svg>
+      </button>
+      <div class="export-wrap">
+        <button class="btn btn--icon" id="export-options" type="button" aria-label="导出选项" title="导出选项"
+          aria-expanded="false" aria-controls="export-panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3" />
+            <path d="M1 14h6M9 8h6M17 16h6" />
+          </svg>
+        </button>
+        <div class="export-panel" id="export-panel" hidden>
+          <p class="export-title">导出图上带上</p>
+          <label class="export-option"><input type="checkbox" id="opt-name" checked /> 用户名</label>
+          <label class="export-option"><input type="checkbox" id="opt-count" checked /> 游戏数</label>
+          <label class="export-option"><input type="checkbox" id="opt-hours" checked /> 总时长</label>
+          <p class="export-note">三个都不勾，就只导出墙。</p>
+        </div>
+      </div>
+      <button class="btn btn--primary" id="download" type="button" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <path d="m7 10 5 5 5-5" />
+          <path d="M12 15V3" />
+        </svg>
+        <span class="btn__text">导出 PNG</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="poster" id="poster">
+      <div class="wall wall--poster" id="wall"></div>
+      <div class="skeleton" id="skeleton" aria-hidden="true">
+        <div class="skeleton-wall" id="skeleton-grid"></div>
+      </div>
+    </div>
+    <section id="list-view" hidden>
+      <div class="list-head">
+        <h2>全部游戏</h2>
+        <p id="list-note"></p>
+      </div>
+      <table class="board-table" id="list-table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">游戏</th>
+            <th scope="col">时长</th>
+            <th scope="col">占比</th>
+            <th scope="col">近两周</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <div class="placard" id="placard" aria-hidden="true">
+    <p class="name" id="placard-name"></p>
+    <p class="stats">
+      <span class="hours" id="placard-hours"></span>
+      <span id="placard-share"></span>
+      <span class="recent" id="placard-recent"></span>
+    </p>
+    <div class="bar"><i id="placard-bar" style="--w: 0%"></i></div>
+  </div>
+
+  <script type="module" src="/assets/profile.js"></script>
+</body>
+
+</html>

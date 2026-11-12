@@ -1,0 +1,14 @@
+{
+  "name": "playtime-panorama-local",
+  "version": "1.4.0",
+  "private": true,
+  "type": "module",
+  "description": "把 Steam 游戏库铺成一面墙：格子面积等于游戏时长，可导出 PNG",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
