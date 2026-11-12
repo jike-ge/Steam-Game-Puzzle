@@ -1,5 +1,11 @@
 # Steam 游戏生涯拼图 · Playtime Panorama
 
+[![CI](../../actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml)
+![Node](https://img.shields.io/badge/node-%3E%3D20-3c873a)
+[![License: MIT](https://img.shields.io/badge/license-MIT-2b7489)](LICENSE)
+
+[English](README.en.md) · 简体中文
+
 把一个人的 Steam 游戏库铺成一面墙：每款游戏是一张封面，**格子面积 = 你在那款游戏里花掉的时间**。
 整面墙可以导出成 PNG 海报，底部可以选择性带上用户名、游戏数、总时长。
 
