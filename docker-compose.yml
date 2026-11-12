@@ -1,8 +1,8 @@
 services:
   panorama:
     build: .
-    image: playtime-panorama:latest
-    container_name: playtime-panorama
+    image: steam-game-puzzle:latest
+    container_name: steam-game-puzzle
     restart: unless-stopped
     ports:
       # 只给本机反代用；要直接对外访问改成 0.0.0.0:8787:8787

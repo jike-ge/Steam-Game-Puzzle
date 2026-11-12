@@ -1,6 +1,6 @@
 {
-  "name": "playtime-panorama",
-  "version": "1.4.0",
+  "name": "steam-game-puzzle",
+  "version": "1.4.1",
   "private": true,
   "type": "module",
   "description": "把 Steam 游戏库铺成一面墙：格子面积等于游戏时长，可导出 PNG",

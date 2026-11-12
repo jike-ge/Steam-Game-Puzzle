@@ -1,4 +1,4 @@
-# Steam Playtime Wall · Playtime Panorama
+# Steam Game Puzzle
 
 Turn someone's Steam library into a wall: every game is a cover, and **each tile's area equals the time spent in that game**.
 Export the whole wall as a PNG poster, optionally with the player's name, game count and total hours on a caption band.
@@ -21,8 +21,8 @@ A zero-dependency Node service — no database, no build step, no `npm install`.
 Node 20+, nothing to install:
 
 ```bash
-git clone https://github.com/jike-ge/playtime-panorama.git
-cd playtime-panorama
+git clone https://github.com/jike-ge/Steam-Game-Puzzle.git
+cd Steam-Game-Puzzle
 cp .env.example .env     # put your STEAM_API_KEY in it
 node server.mjs
 ```

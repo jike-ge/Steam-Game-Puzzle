@@ -1,4 +1,4 @@
-# Steam 游戏生涯拼图 · Playtime Panorama
+# Steam Game Puzzle · Steam 游戏生涯拼图
 
 [![CI](../../actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml)
 ![Node](https://img.shields.io/badge/node-%3E%3D20-3c873a)
@@ -25,8 +25,8 @@
 需要 Node 20 以上，**不用 npm install**：
 
 ```bash
-git clone https://github.com/jike-ge/playtime-panorama.git
-cd playtime-panorama
+git clone https://github.com/jike-ge/Steam-Game-Puzzle.git
+cd Steam-Game-Puzzle
 cp .env.example .env     # 填一个 STEAM_API_KEY
 node server.mjs
 ```

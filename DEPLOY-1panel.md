@@ -1,4 +1,4 @@
-# 用 1Panel 部署 Playtime Panorama
+# 用 1Panel 部署 Steam Game Puzzle
 
 这个项目是零依赖的纯 Node 服务，不需要 `npm install`，也不需要数据库。
 在 1Panel 上有两条路，**推荐第一条（Docker 编排）**，最省心：
@@ -25,8 +25,8 @@
 
 ```bash
 cd /opt
-git clone https://你的仓库/playtime-panorama.git
-cd playtime-panorama
+git clone https://你的仓库/steam-game-puzzle.git
+cd Steam-Game-Puzzle
 ```
 
 没有仓库就上传 zip，解压后确认目录里有 `server.mjs`、`Dockerfile`、`docker-compose.yml`。
@@ -58,7 +58,7 @@ DEMO_STEAM_ID=76561198000000000
 在「主机 → 终端」里：
 
 ```bash
-cd /opt/playtime-panorama
+cd /opt/steam-game-puzzle
 docker compose up -d --build
 ```
 
@@ -92,7 +92,7 @@ curl -s http://127.0.0.1:8787/api/health
 看日志：
 
 ```bash
-docker logs -f playtime-panorama
+docker logs -f steam-game-puzzle
 ```
 
 ### 4. 在 1Panel 里建站点 + 反向代理
@@ -131,7 +131,7 @@ docker logs -f playtime-panorama
 
 ### 1. 上传代码
 
-同方案 A 第 1 步，记住目录，例如 `/opt/playtime-panorama`。
+同方案 A 第 1 步，记住目录，例如 `/opt/steam-game-puzzle`。
 
 ### 2. 创建 Node 运行环境
 
@@ -142,7 +142,7 @@ docker logs -f playtime-panorama
 | 名称 | `panorama` |
 | 应用类型 | `Node.js` |
 | Node 版本 | `22` 或 `20` |
-| 源码目录 | `/opt/playtime-panorama` |
+| 源码目录 | `/opt/steam-game-puzzle` |
 | 启动命令 | `node server.mjs` |
 | 端口 | `8787` |
 | 外部访问 | 不建议开，交给反代 |
@@ -151,7 +151,7 @@ docker logs -f playtime-panorama
 
 ### 3. 写 .env
 
-「主机 → 文件」进入 `/opt/playtime-panorama`，新建 `.env`（内容同方案 A 第 2 步）。
+「主机 → 文件」进入 `/opt/steam-game-puzzle`，新建 `.env`（内容同方案 A 第 2 步）。
 
 > 运行环境里改完 `.env` 要**重启**一下这个 Node 运行环境才生效。
 
@@ -169,12 +169,12 @@ docker logs -f playtime-panorama
 ```bash
 # /etc/systemd/system/panorama.service
 [Unit]
-Description=Playtime Panorama
+Description=Steam Game Puzzle
 After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/opt/playtime-panorama
+WorkingDirectory=/opt/steam-game-puzzle
 ExecStart=/usr/bin/node server.mjs
 Restart=always
 RestartSec=3
@@ -245,12 +245,12 @@ Steam API 密钥：已从环境变量读取
 
 **封面全是灰块**
 - 服务器访问不了 `cdn.cloudflare.steamstatic.com`，或者写不进 `data/covers`
-- 进容器看一眼：`docker exec -it playtime-panorama ls /app/data/covers`
+- 进容器看一眼：`docker exec -it steam-game-puzzle ls /app/data/covers`
 
 **改了代码怎么更新**
 
 ```bash
-cd /opt/playtime-panorama
+cd /opt/steam-game-puzzle
 git pull            # 或重新上传文件
 docker compose up -d --build
 ```
@@ -261,7 +261,7 @@ docker compose up -d --build
 curl -s http://127.0.0.1:8787/api/health | grep -o '"version":"[^"]*"'
 ```
 
-启动日志第一行也会打印 `Playtime Panorama v1.2.0`。
+启动日志第一行也会打印 `Steam Game Puzzle v1.2.0`。
 
 > 更新后页面还是旧样子，先 **Ctrl+F5** 强刷。
 > HTML 是 `no-cache`，但 CSS/JS 会被浏览器缓存 120 秒。

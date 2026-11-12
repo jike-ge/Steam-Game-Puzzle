@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Playtime Panorama — 本地版
+// Steam Game Puzzle — 本地版
 // 零依赖：node server.mjs 就能跑起来。
 
 import './lib/env.mjs'; // 必须第一个：后面几个模块在 import 时就会读环境变量
@@ -397,7 +397,7 @@ const server = http.createServer(async (req, res) => {
     if (!identifier) return servePage(res, '/index.html', { VERSION, BUILD });
     if (/^[A-Za-z0-9_.-]{1,64}$/.test(identifier)) {
       const demo = identifier === 'demo' ? await loadDemo() : null;
-      const title = demo ? `${demo.displayName} · Playtime Panorama` : `${identifier} · Playtime Panorama`;
+      const title = demo ? `${demo.displayName} · Steam Game Puzzle` : `${identifier} · Steam Game Puzzle`;
       return servePage(res, '/profile.html', {
         IDENTIFIER: escapeHtml(identifier),
         TITLE: escapeHtml(title),
@@ -419,7 +419,7 @@ const proxy = await detectProxy();
 server.listen(PORT, HOST, () => {
   const url = `http://${HOST}:${PORT}`;
   // 第一行就是版本号，方便 docker logs 一眼确认
-  console.log(`  Playtime Panorama v${VERSION}+${BUILD}`);
+  console.log(`  Steam Game Puzzle v${VERSION}+${BUILD}`);
   console.log(`  ${url}`);
   console.log(
     `  Steam 代理：${proxy ? `${proxy.url.origin}（${proxy.source}）` : '直连（没检测到代理，可用 STEAM_PROXY 指定）'}`,

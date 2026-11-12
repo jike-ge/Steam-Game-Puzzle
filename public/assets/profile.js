@@ -189,7 +189,7 @@ function applyPayload(payload) {
 
   displayName = payload.displayName || payload.resolvedFrom || payload.steamID || identifier;
   nameEl.textContent = displayName;
-  document.title = `${displayName} · Playtime Panorama`;
+  document.title = `${displayName} · Steam Game Puzzle`;
   document.querySelectorAll('.who .badge').forEach((node) => node.remove());
   if (payload.demo) {
     const badge = document.createElement('span');
@@ -305,7 +305,7 @@ function errorCopy(error) {
 
 function renderError(error) {
   const config = errorCopy(error);
-  document.title = '出错了 · Playtime Panorama';
+  document.title = '出错了 · Steam Game Puzzle';
   nameEl.textContent = identifier;
   metaEl.textContent = '';
 
@@ -409,7 +409,7 @@ downloadBtn.addEventListener('click', async () => {
     });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    const safe = String(displayName).replace(/[\\/:*?"<>|\s]+/g, '-').replace(/^-+|-+$/g, '') || 'playtime';
+    const safe = String(displayName).replace(/[\\/:*?"<>|\s]+/g, '-').replace(/^-+|-+$/g, '') || 'steam-game-puzzle';
     link.href = url;
     link.download = `${safe}-panorama.png`;
     document.body.append(link);
