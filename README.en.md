@@ -1,24 +1,55 @@
+<div align="center">
+
 # Steam Game Puzzle
 
-Turn someone's Steam library into a wall: every game is a cover, and **each tile's area equals the time spent in that game**.
-Export the whole wall as a PNG poster, optionally with the player's name, game count and total hours on a caption band.
+**Turn a Steam library into a wall**
 
-English · [简体中文](README.md)
+One cover per game, and each tile's area equals the time spent in it.<br>
+Export the whole wall as a PNG poster, optionally captioned with the player's name, game count and total hours.
 
-![The wall](docs/preview.jpg)
+[![CI](https://github.com/jike-ge/Steam-Game-Puzzle/actions/workflows/ci.yml/badge.svg)](https://github.com/jike-ge/Steam-Game-Puzzle/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-MIT-2b7489)](LICENSE)
+![Node](https://img.shields.io/badge/node-%3E%3D20-3c873a)
+![Dependencies](https://img.shields.io/badge/dependencies-0-2ea44f)
 
-![Home page](docs/home.jpg)
+**English** · [简体中文](README.md)
 
-A zero-dependency Node service — no database, no build step, no `npm install`. Just `node server.mjs`.
+<a href="docs/preview.jpg"><img src="docs/preview.jpg" width="880" alt="The wall"></a>
 
-- Spotlight hover: the wall dims, a wall label slides in with name / hours / share / last-two-week hours
-- Covers are cached on the server and served instantly; ETag + versioned URLs so updates actually reach the browser
-- Switch to a table view for exact hours
-- Errors explain the next step: missing key / rejected key / private profile / Steam unreachable
+</div>
+
+---
+
+A zero-dependency Node service: no packages, no database, no build step — `node server.mjs` and it runs.
+Give it a Steam vanity name or a 17-digit ID and it lays the whole library out as a wall. Sweep the mouse across it
+and the wall dims, leaving a wall label in the corner for the tile under the cursor.
+
+| | |
+|---|---|
+| **Area equals time** | Weight `(hours + 0.1)^0.62`, pushed through a `^1.35` curve; the top three get an extra boost |
+| **Fits one screen** | Binary search for the column count that fills the viewport, then rows are stretched to remove any bottom band |
+| **Spotlight hover** | The wall dims; the label shows name / hours / share / last two weeks |
+| **Covers cached locally** | Fetched once by the server, served same-origin, so the export canvas is never tainted |
+| **Table view** | Switch to a table for every game and its exact hours |
+| **Optional caption** | 2× PNG export with name / game count / total hours along the bottom |
+| **Honest errors** | Missing key, rejected key, private profile, Steam unreachable — each with a next step |
+
+```text
+┌──────────────────────────┬──────────────────────────┐
+│  Counter-Strike 2  5×5   │  Dota 2            5×5   │
+├───────────┬──────────────┴───────┬──────────────────┤
+│ Elden Ring│ 1×1 tiles fill holes │ Baldur's Gate 3  │
+│    4×4    │                      │       3×3        │
+└───────────┴──────────────────────┴──────────────────┘
+```
+
+## Screenshots
+
+<img src="docs/home.jpg" width="820" alt="Home page">
 
 ## Quick start
 
-Node 20+, nothing to install:
+Node 20+, **no `npm install`**:
 
 ```bash
 git clone https://github.com/jike-ge/Steam-Game-Puzzle.git
@@ -29,10 +60,11 @@ node server.mjs
 
 Open <http://127.0.0.1:8787>. `/demo` works without a key (bundled sample data).
 
-> **Why is an API key required?**
-> Since 2024 Steam requires a login to serve `/profiles/<id>/games`, so scraping a public library no longer works.
+> [!IMPORTANT]
+> **Reading the game list requires an API key.** Since 2024 Steam requires a login to serve
+> `/profiles/<id>/games`, so scraping a public library no longer works.
 > Keys are free: [steamcommunity.com/dev/apikey](https://steamcommunity.com/dev/apikey).
-> Resolving a vanity name to a steamID64 still works without a key.
+> Resolving a vanity name to a steamID64 still works without one.
 
 ## Deploy
 
@@ -43,8 +75,7 @@ cp .env.example .env     # STEAM_API_KEY / HOST=0.0.0.0
 docker compose up -d --build
 ```
 
-Step-by-step instructions for the **1Panel** panel (upload, reverse proxy, HTTPS, common 502s) are in
-[DEPLOY-1panel.md](DEPLOY-1panel.md) (Chinese).
+Step-by-step instructions for the **1Panel** panel are in [DEPLOY-1panel.md](DEPLOY-1panel.md) (Chinese).
 
 ## Configuration
 
@@ -60,32 +91,40 @@ All via environment variables, or a `.env` file in the project root (read by bot
 | `STEAM_API_BASE` | `https://api.steampowered.com` | API base URL |
 | `STEAM_COMMUNITY_BASE` | `https://steamcommunity.com` | Community base URL (vanity resolution) |
 | `DEMO_STEAM_ID` | empty | Which account `/demo` shows; empty = bundled sample data |
-| `COVER_SOURCE` | `auto` | `auto` first good image wins / `hashed` prefer the new hashed CDN path / `legacy` old path only |
+| `COVER_SOURCE` | `auto` | `auto` first good image wins / `hashed` prefer the hashed CDN path / `legacy` old path only |
 | `CACHE_DIR` | `./data/cache` | Playtime cache directory |
 | `COVER_DIR` | `./data/covers` | Cover cache directory |
 
 The key can also be entered in the browser: it is stored in `localStorage` and sent to the local server as an
 `X-Steam-API-Key` header, never written to disk on the server.
 
-### Mainland China
+## Two things that bit us
+
+<details>
+<summary><b>Mainland China: Steam is unreachable</b></summary>
 
 `api.steampowered.com` and `steamcommunity.com` are usually unreachable directly from mainland China.
 At startup the server probes common local proxy ports (7890 / 7897 / 1080 …) and uses the first one it finds:
 
-```
+```text
 Steam 代理：http://127.0.0.1:7890（本机 127.0.0.1:7890）
 ```
 
 Or set `STEAM_PROXY=http://127.0.0.1:7890` explicitly, or `off` to force a direct connection.
 Inside Docker, reach the host proxy via `http://host.docker.internal:7890` (compose already adds `host-gateway`).
 
-### Why covers have two addresses
+</details>
+
+<details>
+<summary><b>Covers: why there are two addresses</b></summary>
 
 Games released after 2024 moved their header art from `cdn…/steam/apps/<id>/header.jpg` to
 `shared.akamai…/store_item_assets/steam/apps/<id>/<hash>/header.jpg`, and the hash can only be read from AppInfo.
-So the fetcher races the old path against "look up the hash → new path" and takes the first image that is
-at least 4 KB (Steam returns a 1–2 KB grey placeholder for unreleased titles).
-`COVER_SOURCE` changes that strategy.
+
+So the fetcher races the old path against "look up the hash → new path" and takes the first image that is at least
+4 KB — Steam returns a 1–2 KB grey placeholder for unreleased titles. `COVER_SOURCE` changes that strategy.
+
+</details>
 
 ## API
 
@@ -103,18 +142,18 @@ at least 4 KB (Steam returns a 1–2 KB grey placeholder for unreleased titles).
 2. Weight `w = (hours + 0.1) ^ 0.62`, normalize, then push through a `^1.35` curve to get each tile's target area.
 3. Edge length `span = round(sqrt(1 + ratio^1.35 × (maxSpan² - 1)))`, clamped to `1..maxSpan` where
    `maxSpan = clamp(floor(columns / 6) + 3, 4, 12)`; the top three get an extra boost.
-4. Row height is derived from the column width using the 460:215 header ratio, so an `span × span` tile is exactly
-   the aspect ratio of Steam header art — covers never get distorted.
+4. Row height comes from the column width using the 460:215 header ratio, so a `span × span` tile has exactly the
+   aspect ratio of Steam header art — covers are never distorted.
 5. The column count is found by binary search: the smallest count that still fits one screen height, then reduced
    while it still fits, so tiles stay as large as possible; finally the row height is stretched to remove any
    leftover band at the bottom.
-6. `grid-auto-flow: dense` backfills the holes left by big tiles with the 1×1 ones.
+6. `grid-auto-flow: dense` backfills the holes left by big tiles with 1×1 ones.
 
 The PNG export redraws everything on a canvas with `object-fit: cover` maths and caps the longest edge at 8192 px.
 
 ## Layout of the repo
 
-```
+```text
 server.mjs                HTTP server, routes, page templating
 lib/env.mjs               loads .env at startup
 lib/http.mjs              one request path: proxied tunnel or direct
@@ -153,4 +192,4 @@ This is an independent rewrite: zero-dependency Node, local cover cache, proxy s
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) · Cover art belongs to Valve and the respective publishers
