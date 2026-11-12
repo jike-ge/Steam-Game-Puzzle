@@ -1,6 +1,6 @@
 {
   "name": "steam-game-puzzle",
-  "version": "1.5.0",
+  "version": "1.4.3",
   "private": true,
   "type": "module",
   "description": "把 Steam 游戏库铺成一面墙：格子面积等于游戏时长，可导出 PNG",

@@ -22,7 +22,7 @@ import {
 } from './lib/steam.mjs';
 import { getLibrary, listEntries, readEntry, saveEntry, CACHE_DIR } from './lib/store.mjs';
 import { COVER_DIR, COVER_SOURCE, coverStats, getCover, warmCovers } from './lib/covers.mjs';
-import { enrichNames, nameStats, setOverride, warmNames } from './lib/names.mjs';
+import { enrichNames, nameStats, warmNames } from './lib/names.mjs';
 import { detectProxy, proxyState } from './lib/http.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
@@ -219,28 +219,6 @@ const readApiKey = (req, url) =>
   (url.searchParams.get('api_key') || '').trim() ||
   String(req.headers['x-steam-api-key'] || '').trim();
 
-// 允许在页面上手填中文名（默认关，公开站点建议保持关闭）
-const CAN_EDIT_NAMES = /^(1|on|true|yes)$/i.test(process.env.NAME_EDIT || '');
-
-/** 读一个小的 JSON 请求体。 */
-function readBody(req, limit = 8192) {
-  return new Promise((resolve, reject) => {
-    let size = 0;
-    const chunks = [];
-    req.on('data', (chunk) => {
-      size += chunk.length;
-      if (size > limit) {
-        reject(new Error('请求体太大'));
-        req.destroy();
-        return;
-      }
-      chunks.push(chunk);
-    });
-    req.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
-    req.on('error', reject);
-  });
-}
-
 async function handleDemo(req, res, url) {
   const apiKey = readApiKey(req, url);
   const force = url.searchParams.get('refresh') === '1';
@@ -257,7 +235,6 @@ async function handleDemo(req, res, url) {
       cached: true,
       stale: false,
       namesPending: names.pending,
-      canEditNames: CAN_EDIT_NAMES,
       profile: { steamID: DEMO_STEAM_ID, name: cached.displayName || '示例档案', demo: true },
     });
   }
@@ -283,7 +260,6 @@ async function handleDemo(req, res, url) {
         cached: false,
         stale: false,
         namesPending: names.pending,
-        canEditNames: CAN_EDIT_NAMES,
         profile: { steamID: DEMO_STEAM_ID, name: entry.displayName, demo: true },
       });
     } catch (error) {
@@ -303,7 +279,6 @@ async function handleDemo(req, res, url) {
   return json(res, 200, {
     ...fallback,
     namesPending: fallbackNames.pending,
-    canEditNames: CAN_EDIT_NAMES,
     steamID: DEMO_STEAM_ID || 'demo',
     demo: true,
     demoFallback: Boolean(DEMO_STEAM_ID),
@@ -357,7 +332,6 @@ async function handleLibrary(res, url, identifier) {
     displayName,
     resolvedFrom,
     namesPending: names.pending,
-    canEditNames: CAN_EDIT_NAMES,
     keySource: apiKey ? 'user' : hasServerKey() ? 'server' : 'none',
   });
 }
@@ -408,26 +382,6 @@ const server = http.createServer(async (req, res) => {
           cachedProfiles: entries.length,
           demo: Boolean(await loadDemo()),
         });
-      }
-      if (pathname === '/api/names' && req.method === 'POST') {
-        if (!CAN_EDIT_NAMES) {
-          return json(res, 403, {
-            error: { code: 'name_edit_off', message: '名字编辑没开启。启动时加 NAME_EDIT=1。' },
-          });
-        }
-        const raw = await readBody(req).catch(() => '');
-        let body = null;
-        try {
-          body = JSON.parse(raw || '{}');
-        } catch {
-          body = null;
-        }
-        const appid = Number(body?.appid);
-        if (!Number.isInteger(appid) || appid <= 0) {
-          return json(res, 400, { error: { code: 'bad_appid', message: 'appid 不对。' } });
-        }
-        const zh = await setOverride(appid, body?.zh);
-        return json(res, 200, { ok: true, appid, name_zh: zh, canEditNames: true });
       }
       if (pathname.startsWith('/api/library/')) {
         const identifier = decodeURIComponent(pathname.slice('/api/library/'.length));

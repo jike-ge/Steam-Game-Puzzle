@@ -82,24 +82,11 @@ docker compose up -d --build
 | `STEAM_API_BASE` | `https://api.steampowered.com` | 接口地址 |
 | `STEAM_COMMUNITY_BASE` | `https://steamcommunity.com` | 社区地址（昵称解析） |
 | `DEMO_STEAM_ID` | 空 | `/demo` 用哪个账号；留空就用仓库自带的示例数据 |
-| `NAME_EDIT` | 关 | 设成 `1` 时允许在清单里手填中文名 |
 | `COVER_SOURCE` | `auto` | 封面来源：`auto` 谁快用谁 / `hashed` 优先哈希路径 / `legacy` 只用老路径 |
 | `CACHE_DIR` | `./data/cache` | 时长缓存目录 |
 | `COVER_DIR` | `./data/covers` | 封面缓存目录 |
 
 密钥也可以在前端填：存在浏览器 `localStorage`，随 `X-Steam-API-Key` 请求头发给本机服务器，不落盘。
-
-## 补充中文名
-
-中文名优先查 Steam 商店（`l=schinese&cc=cn`），商店本来就没中文名的（Hollow Knight、Disco Elysium 这类）可以自己补：
-
-- 启动时加 `NAME_EDIT=1`，资料页切成清单，每行悬停会出现一支铅笔，点开直接填
-- 或者手改 `data/names.override.json`：`{ "367520": "空洞骑士" }`
-- 手填的优先级最高，会盖掉自动查到的结果；填空就是删掉这条
-
-名字查不到时为什么不接第三方？试过小黑盒：接口是多层签名（`hkey` + 每请求 nonce），
-社区逆向库 [heybox-url](https://github.com/huandu/heybox-url) 已标注「不支持最新 API」，
-接了也随时会坏，所以做成手填。
 
 ## 两个踩过的坑
 

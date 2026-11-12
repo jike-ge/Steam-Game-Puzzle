@@ -83,26 +83,12 @@ All via environment variables, or a `.env` file in the project root (read by bot
 | `STEAM_API_BASE` | `https://api.steampowered.com` | API base URL |
 | `STEAM_COMMUNITY_BASE` | `https://steamcommunity.com` | Community base URL (vanity resolution) |
 | `DEMO_STEAM_ID` | empty | Which account `/demo` shows; empty = bundled sample data |
-| `NAME_EDIT` | off | Set to `1` to allow editing Chinese names from the table view |
 | `COVER_SOURCE` | `auto` | `auto` first good image wins / `hashed` prefer the hashed CDN path / `legacy` old path only |
 | `CACHE_DIR` | `./data/cache` | Playtime cache directory |
 | `COVER_DIR` | `./data/covers` | Cover cache directory |
 
 The key can also be entered in the browser: it is stored in `localStorage` and sent to the local server as an
 `X-Steam-API-Key` header, never written to disk on the server.
-
-## Filling in Chinese names
-
-Chinese titles come from the Steam store (l=schinese&cc=cn). For games the store only lists in English
-(Hollow Knight, Disco Elysium…), you can add them yourself:
-
-- start with NAME_EDIT=1, switch a profile to the table view, and a pencil appears on each row
-- or edit data/names.override.json directly: `{ "367520": "空洞骑士" }`
-- manual entries win over the automatic lookup; an empty value removes the entry
-
-Why not a third-party source? Heybox (小黑盒) signs every request with hkey + a per-request nonce; the
-community reverse-engineering library [heybox-url](https://github.com/huandu/heybox-url) is marked
-"doesn't work with latest API", so integrating it would break at any moment.
 
 ## Two things that bit us
 

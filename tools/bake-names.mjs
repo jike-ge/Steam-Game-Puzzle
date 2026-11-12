@@ -1,5 +1,4 @@
 import fs from 'node:fs/promises';
-import { cleanChineseName } from '../lib/names.mjs';
 
 const FILE = 'data/demo-library.json';
 const STORE = 'https://store.steampowered.com/api/appdetails';
