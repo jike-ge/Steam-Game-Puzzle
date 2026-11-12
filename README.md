@@ -25,7 +25,7 @@
 需要 Node 20 以上，**不用 npm install**：
 
 ```bash
-git clone https://github.com/<your-name>/playtime-panorama.git
+git clone https://github.com/jike-ge/playtime-panorama.git
 cd playtime-panorama
 cp .env.example .env     # 填一个 STEAM_API_KEY
 node server.mjs

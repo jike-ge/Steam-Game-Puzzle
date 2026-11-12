@@ -21,7 +21,7 @@ A zero-dependency Node service — no database, no build step, no `npm install`.
 Node 20+, nothing to install:
 
 ```bash
-git clone <this-repo>
+git clone https://github.com/jike-ge/playtime-panorama.git
 cd playtime-panorama
 cp .env.example .env     # put your STEAM_API_KEY in it
 node server.mjs
