@@ -1094,6 +1094,26 @@ body.home {
   color: var(--bone);
 }
 
+/* 页脚的仓库链接：图标 + 名字 */
+.foot-repo a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--bone-dim);
+  transition: color 160ms var(--ease);
+}
+
+.foot-repo a:hover {
+  color: var(--bone);
+}
+
+.foot-repo svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  opacity: 0.85;
+}
+
 /* ---------------------------------------------------------------- poster */
 
 .poster {
