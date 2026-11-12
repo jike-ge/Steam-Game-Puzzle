@@ -14,7 +14,7 @@
 
 [English](README.en.md) · **简体中文**
 
-<a href="docs/preview.jpg"><img src="docs/preview.jpg" width="880" alt="游戏墙"></a>
+<a href="docs/screenshot-wall.jpg"><img src="docs/screenshot-wall.jpg" width="880" alt="游戏墙"></a>
 
 </div>
 
@@ -35,7 +35,7 @@
 
 ## 界面
 
-<img src="docs/home.jpg" width="820" alt="首页">
+<img src="docs/screenshot-home.jpg" width="820" alt="首页">
 
 ## 跑起来
 

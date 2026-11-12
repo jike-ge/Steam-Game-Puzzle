@@ -14,7 +14,7 @@ Export the whole wall as a PNG poster, optionally captioned with the player's na
 
 **English** · [简体中文](README.md)
 
-<a href="docs/preview.jpg"><img src="docs/preview.jpg" width="880" alt="The wall"></a>
+<a href="docs/screenshot-wall.jpg"><img src="docs/screenshot-wall.jpg" width="880" alt="The wall"></a>
 
 </div>
 
@@ -36,7 +36,7 @@ and the wall dims, leaving a wall label in the corner for the tile under the cur
 
 ## Screenshots
 
-<img src="docs/home.jpg" width="820" alt="Home page">
+<img src="docs/screenshot-home.jpg" width="820" alt="Home page">
 
 ## Quick start
 
